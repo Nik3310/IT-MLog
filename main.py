@@ -1,26 +1,33 @@
+import sys
 import tkinter as tk
 from logic import LogBook
-from cli_ui import run_cli
+from cli_ui import run_cli, add_entry_cli, list_entries_cli
 from gui_ui import LogBookApp
 
 
 def main():
-    book = LogBook()  # Loome loogika eksemplari
+    book = LogBook()
 
-    print("Vali režiim:")
-    print("1. Konsool (CLI)")
-    print("2. Graafiline (GUI)")
+    # sys.argv - see on nimekiri sõnadest, mida kasutasid käivitamisel
+    # sys.argv[0] on alati faili nimi (main.py)
+    # sys.argv[1] on esimene käsk (add, list, gui jne)
 
-    choice = input("Sisesta valik (1/2): ")
+    if len(sys.argv) > 1:
+        command = sys.argv[1].lower()
 
-    if choice == "1":
-        run_cli(book)
-    elif choice == "2":
-        root = tk.Tk()
-        app = LogBookApp(root, book)
-        root.mainloop()
+        if command == "add":
+            add_entry_cli(book)
+        elif command == "list":
+            list_entries_cli(book)
+        elif command == "gui":
+            root = tk.Tk()
+            app = LogBookApp(root, book)
+            root.mainloop()
+        else:
+            print(f"Tundmatu käsk: {command}")
+            print("Kasuta: add, list, gui või käivita ilma argumentideta menüü jaoks.")
     else:
-        print("Vale valik. Käivitan CLI...")
+        # Kui argumente pole, käivitame tavalise interaktiivse menüü
         run_cli(book)
 
 

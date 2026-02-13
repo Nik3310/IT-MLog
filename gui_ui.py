@@ -51,3 +51,4 @@ class LogBookApp:
             item_id = self.tree.item(sel[0])['values'][0]
             self.book.delete_entry(item_id)
             self.update_table()
+

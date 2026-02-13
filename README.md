@@ -1,38 +1,41 @@
-# IT-MLog (CLI + GUI)
+# IT-MLog (CLI + Argument Management)
 
-See projekt on loodud Pythoni õppeaine raames. Rakendus võimaldab hallata IT-tööde ja hoolduste logisid (nt arvuti parandamine, tarkvara paigaldus jne).
+IT-MLog on Pythonis loodud IT hoolduspäevik, mis võimaldab hallata tehnilisi logisid nii interaktiivse menüü kui ka kiirete käsurea käskude abil.
 
-## Funktsionaalsus
+## Põhifunktsioonid
 
-- **Logikirjete haldamine**: Lisamine, kuvamine, staatuse muutmine (OPEN/DONE) ja kustutamine.
-- **Andmete valideerimine**: Pealkiri peab olema vähemalt 4 ja kirjeldus vähemalt 10 tähemärki pikk.
-- **Andmete salvestamine**: Kõik andmed salvestatakse automaatselt JSON-faili (`logbook.json`).
-- **Otsing ja filtreerimine**: Võimalus leida kirjeid märksõna või staatuse järgi.
-- **Kaks kasutajaliidest**: 
-  - Konsooliliides (CLI) kiireks tööks.
-  - Graafiline liides (GUI) Tkinteriga mugavaks kasutamiseks.
-- **Importimise test**: Vigaste andmetega failide importimise tugi koos vigade logimisega (`import_errors.log`).
+- **Lühikesed ID-d**: Kirjete haldamine on tehtud lihtsaks tänu numbrilistele ID-dele (1, 2, 3...).
+- **Automaatne salvestamine**: Kõik muudatused salvestatakse koheselt `logbook.json` faili.
+- **Nutikas tabelivaade**: CLI tabel piirab pikkade kirjelduste kuvamist, et vältida teksti purunemist ekraanil.
+- **Argumentide tugi**: Võimalus sooritada tegevusi otse programmi käivitamisel ilma menüüd avamata.
+- **Vigade logimine**: Testfailide importimisel tekkivad vead salvestatakse faili `import_errors.log`.
 
-## Failistruktuur
+## Käivitamine ja kasutamine
 
-- `main.py` – Rakenduse käivitusfail (valik CLI ja GUI vahel).
-- `models.py` – Andmemudel (`LogEntry` klass) ja valideerimise loogika.
-- `logic.py` – Äriloogika (`LogBook` klass), andmete töötlemine ja JSON-i haldus.
-- `cli_ui.py` – Konsoolipõhine kasutajaliides.
-- `gui_ui.py` – Graafiline kasutajaliides (Tkinter).
+Programmi saab käivitada kolmel viisil:
 
-## Kasutamine
-
-Programmi käivitamiseks sisestage terminalis:
-
+### 1. Interaktiivne menüü
+Tavaline režiim koos selgitava menüüga:
 ```bash
 python main.py
 ```
 
-Pärast käivitamist saate valida, kas soovite kasutada konsooli- või graafilist liidest.
+### 2. Kiirkäsud (Arguments)
+Kasuta otse käsurealt kiireks tegutsemiseks:
+- `python main.py list` – kuvab koheselt kõik logid ja sulgub.
+- `python main.py add` – avab koheselt uue kirje lisamise dialoogi.
 
-## Nõuded süsteemile
+### 3. Graafiline liides (GUI)
+Kuigi põhirõhk on suunatud CLI võimekusele, saab graafilise liidese käivitada järgmise käsuga:
+```bash
+python main.py gui
+```
 
-- Python 3.x
-- Tkinter teek (tavaliselt Pythoniga kaasas)
+## Failistruktuur
+
+- `main.py` – Programmi sisenemispunkt (argumentide töötlemine).
+- `models.py` – `LogEntry` klass ja andmete valideerimine.
+- `logic.py` – `LogBook` klass, andmete haldus ja automaatne salvestamine.
+- `cli_ui.py` – Kasutajaliides konsooli jaoks (tabeli vormindamine ja pausid).
+- `gui_ui.py` – Graafiline kasutajaliides (Tkinter).
 
