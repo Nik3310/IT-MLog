@@ -2,8 +2,8 @@ import datetime
 
 
 class LogEntry:
-    def __init__(self, title, description, status="OPEN", created_at=None):
-        # created_at on unikaalne ID. Kui seda pole, loome uue.
+    def __init__(self, entry_id, title, description, status="OPEN", created_at=None):
+        self.entry_id = entry_id  # Lühike numbriline ID
         if created_at is None:
             self.created_at = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
         else:
@@ -15,7 +15,6 @@ class LogEntry:
 
     @staticmethod
     def validate(title, description):
-        """Andmete valideerimine vastavalt reeglitele (punkt 2.1)."""
         if len(title) < 4:
             return False, "Pealkiri peab olema vähemalt 4 tähemärki pikk."
         if len(description) < 10:
@@ -23,8 +22,8 @@ class LogEntry:
         return True, ""
 
     def to_dict(self):
-        """Muudab objekti sõnastikuks JSON salvestamiseks."""
         return {
+            "id": self.entry_id,  # Salvestame ka ID
             "created_at": self.created_at,
             "title": self.title,
             "description": self.description,
